@@ -8,15 +8,31 @@ export default function Feedback() {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  const counterGood = () => {
-    setGood(state => state + 1);
+  const counterFeedback = type => {
+    switch (type) {
+      case 'good':
+        setGood(state => state + 1);
+        break;
+      case 'neutral':
+        setNeutral(state => state + 1);
+        break;
+      case 'bad':
+        setBad(state => state + 1);
+        break;
+      default:
+        throw new Error(`Unknows feedback type ${type}`);
+    }
   };
-  const counterBad = () => {
-    setBad(state => state + 1);
-  };
-  const counterNeutral = () => {
-    setNeutral(state => state + 1);
-  };
+
+  // const counterGood = () => {
+  //   setGood(state => state + 1);
+  // };
+  // const counterBad = () => {
+  //   setBad(state => state + 1);
+  // };
+  // const counterNeutral = () => {
+  //   setNeutral(state => state + 1);
+  // };
 
   const countTotalFeedback = good + neutral + bad;
   const countPositiveFeedbackPercentage = Math.round(
@@ -31,7 +47,7 @@ export default function Feedback() {
             type="button"
             className="Button"
             name="good"
-            onClick={counterGood}
+            onClick={() => counterFeedback('good')}
           >
             Good
           </button>
@@ -40,7 +56,7 @@ export default function Feedback() {
             type="button"
             className="Button"
             name="neutral"
-            onClick={counterNeutral}
+            onClick={() => counterFeedback('neutral')}
           >
             Neutral
           </button>
@@ -49,7 +65,7 @@ export default function Feedback() {
             type="button"
             className="Button"
             name="bad"
-            onClick={counterBad}
+            onClick={() => counterFeedback('bad')}
           >
             Bad
           </button>
